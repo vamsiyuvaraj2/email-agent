@@ -1,0 +1,100 @@
+{
+  "costing_pricing": {
+    "description": "Buyer or merchandising requests about cost sheets, pricing, target costs, or non-e-bid commercial discussions.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Acknowledge the program or style, summarize the costing status, and clearly call out any missing numbers, attachments, or internal approvals needed before confirming.",
+    "must_not_assume": [
+      "target FOB or CM values",
+      "approved margin",
+      "factory capacity commitments",
+      "commercial approval status"
+    ]
+  },
+  "shipment_logistics": {
+    "description": "Shipment updates, AWB details, pickup confirmations, delivery timing, and freight coordination.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Restate the shipment reference, confirm the current status only if it appears in the message, and ask focused follow-ups for missing AWB, booking, ETA, or port details.",
+    "must_not_assume": [
+      "actual shipment date",
+      "ETA or vessel details",
+      "pickup completion",
+      "carrier confirmation"
+    ]
+  },
+  "inspection_quality": {
+    "description": "Final inspection planning, pass/fail status, quality findings, and compliance follow-up.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Use a factual tone, state the inspection topic, avoid inventing pass/fail outcomes, and ask for the report or defect details if they are not explicit.",
+    "must_not_assume": [
+      "inspection pass/fail result",
+      "defect severity",
+      "re-inspection timing",
+      "buyer disposition"
+    ]
+  },
+  "internal_approval": {
+    "description": "ERP, PO, and internal approval requests that require internal ownership or authorization.",
+    "automation_fit": "Human review required",
+    "response_style": "Draft only brief acknowledgements or escalation notes. Do not imply approval, release, or system completion unless it is already confirmed in the message.",
+    "must_not_assume": [
+      "approval granted",
+      "ERP completed",
+      "PO released",
+      "management sign-off"
+    ]
+  },
+  "production_status": {
+    "description": "Daily production, shipment pending, wash balance, and execution-status reporting.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Summarize the operational ask, keep the reply concise, and turn vague status requests into a concrete checklist of required updates.",
+    "must_not_assume": [
+      "current production quantities",
+      "line input completion",
+      "shipment readiness",
+      "factory progress percentages"
+    ]
+  },
+  "development_program": {
+    "description": "Style, season, BOM, sample, and program-development coordination.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Restate the style or season reference, identify the requested development item, and ask for the missing tech pack, BOM, sample, or timeline inputs when needed.",
+    "must_not_assume": [
+      "sample readiness",
+      "BOM closure",
+      "style approval",
+      "seasonal alignment"
+    ]
+  },
+  "documents_commercial": {
+    "description": "Invoices, POs, LC topics, reports, and commercial document exchange.",
+    "automation_fit": "Draft with human review",
+    "response_style": "Acknowledge the document workflow, confirm receipt if obvious from the message, and ask for missing document references rather than guessing them.",
+    "must_not_assume": [
+      "document accuracy",
+      "invoice settlement",
+      "PO issuance",
+      "report approval"
+    ]
+  },
+  "collaboration_misc": {
+    "description": "Comments, notifications, and collaboration artifacts that usually need routing more than drafting.",
+    "automation_fit": "Triaged acknowledgement only",
+    "response_style": "Keep responses short and route the message to the right owner or summarize the next action.",
+    "must_not_assume": [
+      "work completed",
+      "comment resolved",
+      "design approved"
+    ]
+  },
+  "other": {
+    "description": "Unclassified email that still may need summary or manual routing.",
+    "automation_fit": "Human review required",
+    "response_style": "Summarize the request, avoid commitments, and ask for clarification where the request is ambiguous.",
+    "must_not_assume": [
+      "intent",
+      "owner",
+      "timeline",
+      "approval status"
+    ]
+  }
+}
