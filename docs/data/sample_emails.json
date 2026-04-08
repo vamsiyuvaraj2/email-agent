@@ -1,0 +1,86 @@
+[
+  {
+    "id": "shipment-awb",
+    "category": "shipment_logistics",
+    "direction": "external_to_internal",
+    "subject": "RE: AWB confirmation for PO 791573 / ETA request",
+    "from": "purbasa_shee@gap.com",
+    "to": ["masud.r3@standardmhgroup.com"],
+    "cc": ["saroar_a@standardmhgroup.com"],
+    "date": "2025-08-13T03:30:00Z",
+    "summary": "Buyer asking for AWB, ex-factory date, and ETA confirmation for a shipment.",
+    "body": "Hi Masud,\n\nPlease share the AWB number, ex-factory date, and latest ETA to the DC for PO 791573. We need to close the shipment tracker tonight.\n\nIf pickup is not completed yet, please confirm the revised timeline and any risk to on-time delivery.\n\nRegards,\nPurbasa"
+  },
+  {
+    "id": "costing-sp26",
+    "category": "costing_pricing",
+    "direction": "external_to_internal",
+    "subject": "[External] Costing update needed for SP26 toddler boys",
+    "from": "nidhi_jain@gap.com",
+    "to": ["saroar_a@standardmhgroup.com"],
+    "cc": ["masud.r3@standardmhgroup.com"],
+    "date": "2025-07-22T09:15:00Z",
+    "summary": "Buyer wants a revised cost after fabric consumption changes and expects a final FOB view.",
+    "body": "Hi Saroar,\n\nWe reviewed the latest consumption change for SP26 toddler boys and need the final costing update. Please confirm whether the revised fabric usage impacts FOB, wash, or trim assumptions.\n\nIf there is any dependency on internal approval, call it out clearly. We would like the updated costing by tomorrow EOD.\n\nThanks,\nNidhi"
+  },
+  {
+    "id": "inspection-d78188",
+    "category": "inspection_quality",
+    "direction": "external_to_internal",
+    "subject": "FW: Final inspection status for D78188 / urgent",
+    "from": "sultan@elitestyle.com.hk",
+    "to": ["zaber.a@standardmhgroup.com"],
+    "cc": ["mmonir.i@standardmhgroup.com"],
+    "date": "2025-06-06T10:23:17Z",
+    "summary": "Inspection partner needs confirmation on corrective actions and shipment impact.",
+    "body": "Dear Team,\n\nThe final inspection was completed today for style D78188. Three minor issues were noted during checking. Before the final report is released, please confirm whether corrective action has been closed and whether shipment timing is affected.\n\nIf any rework is pending, share the expected completion timing.\n\nBest regards,\nSultan"
+  },
+  {
+    "id": "invoice-validation",
+    "category": "documents_commercial",
+    "direction": "external_to_internal",
+    "subject": "RE: HO25 GAP order validation / outstanding invoice references",
+    "from": "salla.praveenkumar@ril.com",
+    "to": ["masud.r3@standardmhgroup.com"],
+    "cc": ["saheb.s@standardmhgroup.com"],
+    "date": "2025-07-23T06:07:17Z",
+    "summary": "Commercial counterparty is asking for missing invoice and PO references to validate a GAP order.",
+    "body": "Hi Masud,\n\nWe are still missing the final invoice references and related PO mapping for the HO25 GAP order validation batch. Please send the updated invoice copy and confirm the corresponding PO numbers so we can close the validation.\n\nLet us know if any document is still under revision.\n\nRegards,\nPraveen"
+  },
+  {
+    "id": "daily-production",
+    "category": "production_status",
+    "direction": "external_to_internal",
+    "subject": "Daily production status for standard stitches woven limited",
+    "from": "gap_inc_plm@gap.com",
+    "to": ["shafiqul.i8@standardmhgroup.com"],
+    "cc": ["moyezzem_h@standardmhgroup.com"],
+    "date": "2025-07-11T04:06:36Z",
+    "summary": "Buyer-side platform is requesting a current production snapshot and blocker list.",
+    "body": "Hello Team,\n\nPlease share today's production status for the listed woven programs, including cut, sewing, finishing, and packing quantities. We also need any blocker that could affect line plan or shipment readiness.\n\nIf any style requires management attention, mention it separately.\n\nThanks."
+  },
+  {
+    "id": "erp-approval",
+    "category": "internal_approval",
+    "direction": "internal_only",
+    "subject": "Need ERP PO approve for Style# 819402 (HOLIDAY-2025)",
+    "from": "sirazul.i@standardmhgroup.com",
+    "to": ["zaber.a@standardmhgroup.com"],
+    "cc": ["amir.a@standardmhgroup.com", "shahiduzzaman.g@standardmhgroup.com"],
+    "date": "2025-06-01T09:43:41Z",
+    "summary": "Internal team is asking for ERP PO approval to avoid blocking the next operational step.",
+    "body": "Dear Sir,\n\nWe need ERP PO approval today for style 819402 under HOLIDAY-2025. Fabric booking and next process steps are waiting for release.\n\nPlease approve in ERP or advise if any additional check is required from our side.\n\nRegards,\nSirazul"
+  },
+  {
+    "id": "poly-booking",
+    "category": "development_program",
+    "direction": "internal_to_external",
+    "subject": "2nd time poly booking for style # D62985 Fall-25",
+    "from": "rouf.a@standardmhgroup.com",
+    "to": ["vendor.ops@panther-textiles.com"],
+    "cc": ["masud.r3@standardmhgroup.com"],
+    "date": "2025-08-10T09:57:22Z",
+    "summary": "Factory team is following up with a vendor on a second booking tied to style development.",
+    "body": "Dear Team,\n\nPlease treat this as the second follow-up for poly booking against style D62985 for Fall-25. We need your confirmation on booking date, available capacity, and any sample packaging constraints from your side.\n\nKindly share the earliest possible confirmation so we can align the program timeline.\n\nThanks,\nRouf"
+  }
+]
