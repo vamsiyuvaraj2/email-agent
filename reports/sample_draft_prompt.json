@@ -1,0 +1,12 @@
+{
+  "category": "shipment_logistics",
+  "automation_fit": "Draft with human review",
+  "subject": "FW: AWB Confirmation//  2252701570 & 9079700000",
+  "sender": "moznu.m@standardmhgroup.com",
+  "direction": "internal_only",
+  "attachment_count": 0,
+  "prompt_preview": {
+    "instructions": "You draft professional email replies for a garment manufacturing / merchandising team. Be concise, factual, and operationally clear. Never invent prices, approvals, dates, quantities, shipment details, or inspection outcomes. If a required fact is missing, say so and ask for the minimum follow-up needed. Assume every draft must be human-reviewed before sending.",
+    "user_prompt": "Category: shipment_logistics\nAutomation fit: Draft with human review\nCategory description: Shipment updates, AWB details, pickup confirmations, delivery timing, and freight coordination.\nDrafting guidance: Restate the shipment reference, confirm the current status only if it appears in the message, and ask focused follow-ups for missing AWB, booking, ETA, or port details.\nMust not assume: actual shipment date, ETA or vessel details, pickup completion, carrier confirmation\n\nMessage metadata\n- Subject: FW: AWB Confirmation//  2252701570 & 9079700000\n- Sender: moznu.m@standardmhgroup.com\n- To: rokan.u1@standard-group.com, masud.r3@standard-group.com, zaber.a@standardmhgroup.com\n- Cc: ahsan.g@standardmhgroup.com\n- Date: 2025-06-01T10:01:52+00:00\n- Direction: internal_only\n- Attachments: 0\n\nBody\n(no usable body text extracted)\n\nReturn valid JSON with exactly these keys:\n- category\n- intent_summary\n- draft_response\n- missing_information\n- human_review_flags"
+  }
+}
