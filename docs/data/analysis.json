@@ -1,0 +1,111 @@
+{
+  "source": "Zaber_MRC_142360.pst",
+  "messageCount": 2934,
+  "externalMessageCount": 1342,
+  "dateRange": {
+    "start": "2009-04-16",
+    "end": "2025-08-16"
+  },
+  "directionCounts": {
+    "internal_only": 1592,
+    "external_to_internal": 859,
+    "internal_to_external": 463,
+    "external_only": 20
+  },
+  "categoryCounts": {
+    "development_program": 723,
+    "other": 681,
+    "shipment_logistics": 612,
+    "inspection_quality": 277,
+    "documents_commercial": 239,
+    "production_status": 142,
+    "costing_pricing": 118,
+    "collaboration_misc": 104,
+    "internal_approval": 38
+  },
+  "topExternalDomains": [
+    { "value": "gap.com", "count": 1421 },
+    { "value": "bureauveritas.com", "count": 574 },
+    { "value": "standardargroup.com", "count": 496 },
+    { "value": "panther-textiles.com", "count": 443 },
+    { "value": "bbmglobal.com", "count": 383 },
+    { "value": "sgtgroup.net", "count": 254 },
+    { "value": "elitestyle.com.hk", "count": 217 }
+  ],
+  "topSubjects": [
+    { "value": "[External]HOL'25 GIRLS WOVEN BOTTOMS - JAN", "count": 64 },
+    { "value": "[External]Costing -Sp-26-- Toddler boys", "count": 52 },
+    { "value": "TCEL Woven- Shipment pending", "count": 49 },
+    { "value": "WASH BALANCE FOR GAP BUYER.", "count": 48 },
+    { "value": "Shams- Shipment pending", "count": 43 },
+    { "value": "Brand approved", "count": 42 },
+    {
+      "value": "Final inspection offer & status for standard stitches woven limited.",
+      "count": 39
+    },
+    { "value": "A new comment in CIVIL ENG - GO TG", "count": 37 }
+  ],
+  "automationCandidates": [
+    {
+      "category": "development_program",
+      "count": 723,
+      "automationFit": "Draft with human review",
+      "description": "Style, season, BOM, sample, and program-development coordination."
+    },
+    {
+      "category": "other",
+      "count": 681,
+      "automationFit": "Human review required",
+      "description": "Unclassified email that still may need summary or manual routing."
+    },
+    {
+      "category": "shipment_logistics",
+      "count": 612,
+      "automationFit": "Draft with human review",
+      "description": "Shipment updates, AWB details, pickup confirmations, delivery timing, and freight coordination."
+    },
+    {
+      "category": "inspection_quality",
+      "count": 277,
+      "automationFit": "Draft with human review",
+      "description": "Final inspection planning, pass/fail status, quality findings, and compliance follow-up."
+    },
+    {
+      "category": "documents_commercial",
+      "count": 239,
+      "automationFit": "Draft with human review",
+      "description": "Invoices, POs, LC topics, reports, and commercial document exchange."
+    },
+    {
+      "category": "production_status",
+      "count": 142,
+      "automationFit": "Draft with human review",
+      "description": "Daily production, shipment pending, wash balance, and execution-status reporting."
+    },
+    {
+      "category": "costing_pricing",
+      "count": 118,
+      "automationFit": "Draft with human review",
+      "description": "Buyer or merchandising requests about cost sheets, pricing, target costs, or non-e-bid commercial discussions."
+    },
+    {
+      "category": "collaboration_misc",
+      "count": 104,
+      "automationFit": "Triaged acknowledgement only",
+      "description": "Comments, notifications, and collaboration artifacts that usually need routing more than drafting."
+    },
+    {
+      "category": "internal_approval",
+      "count": 38,
+      "automationFit": "Human review required",
+      "description": "ERP, PO, and internal approval requests that require internal ownership or authorization."
+    }
+  ],
+  "observations": [
+    "This inbox behaves like buyer, merchandising, and export-operations coordination rather than end-customer support.",
+    "The strongest automation opening is human-reviewed draft generation, not full auto-send.",
+    "Category volume clusters around development, logistics, quality, and commercial document exchange.",
+    "Gap and inspection partners dominate the external footprint, which makes the workflow legible enough for a focused AI pilot.",
+    "Internal approvals and ambiguous threads should remain manual even in the demo story."
+  ]
+}
