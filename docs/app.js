@@ -25,53 +25,6 @@ const CATEGORY_COLORS = {
   other: "#b7a28b",
 };
 
-const CATEGORY_SYSTEMS = {
-  shipment_logistics: [
-    "Shipment tracker for booking, ex-factory, ETA, and delivery milestones",
-    "AWB or freight portal for airway bill, carrier, and pickup confirmation",
-    "ERP or order execution system for PO shipment status and hold flags",
-  ],
-  costing_pricing: [
-    "ERP or costing system for approved FOB, CM, and margin assumptions",
-    "PLM or style-cost sheet workflow for fabric, trim, and wash changes",
-    "Internal approval workflow for commercial sign-off before commitment",
-  ],
-  inspection_quality: [
-    "Inspection or compliance portal for pass/fail status and defect details",
-    "Quality tracking system for CAPA, rework, and closure status",
-    "Shipment tracker to confirm whether quality issues affect dispatch timing",
-  ],
-  documents_commercial: [
-    "Invoice and document repository for invoice copy, PO mapping, and revisions",
-    "LC or trade-finance tracker for payment and document status",
-    "ERP for PO, order validation, and dispatch-document references",
-  ],
-  production_status: [
-    "Production tracker or MES for cut, sewing, finishing, and packing status",
-    "Line planning dashboard for bottlenecks and capacity constraints",
-    "Shipment readiness tracker for pending blockers before dispatch",
-  ],
-  development_program: [
-    "PLM or style-BOM workflow for tech pack, BOM, and sample status",
-    "Sample development tracker for proto, fit, and approval stage",
-    "Vendor capacity or booking tracker for timeline and material readiness",
-  ],
-  internal_approval: [
-    "ERP or PO approval workflow for release and authorization status",
-    "Internal approval queue for pending finance, sourcing, or management actions",
-    "Order execution system for downstream impact of approval delays",
-  ],
-  collaboration_misc: [
-    "Collaboration workspace for comment history and owner assignment",
-    "Project tracker for the next action owner and due date",
-  ],
-  other: [
-    "ERP or order system for the latest order context",
-    "PLM or document repository for related style or program references",
-    "Internal workflow tools to identify the current owner before drafting",
-  ],
-};
-
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
@@ -345,6 +298,7 @@ function replaceChart(id, config) {
 }
 
 function renderDraftStudio() {
+  ensureSystemCard();
   renderFilterChips();
   renderSampleList();
   renderSelectedEmail();
@@ -434,7 +388,6 @@ function renderSelectedEmail() {
   ].join("");
 
   document.getElementById("selectedBody").textContent = sample.body;
-  renderSystemList(sample.category);
 }
 
 function metaItem(label, value) {
@@ -457,7 +410,7 @@ function renderGeneratedDraft() {
     document.getElementById("draftText").textContent = "No draft generated yet.";
     renderTagList("missingList", []);
     renderTagList("flagList", []);
-    renderSystemList(getSelectedSample()?.category);
+    renderTagList("systemList", ["Generate a draft to see suggested systems to check."]);
     copyButton.disabled = true;
     return;
   }
@@ -467,19 +420,42 @@ function renderGeneratedDraft() {
     payload.draft_email || "The model did not return a draft body.";
   renderTagList("missingList", payload.missing_information || []);
   renderTagList("flagList", payload.review_flags || []);
-  renderSystemList(payload.category || getSelectedSample()?.category);
+  renderTagList(
+    "systemList",
+    payload.systems_to_check?.length
+      ? payload.systems_to_check
+      : ["The model did not suggest any systems to check."]
+  );
   copyButton.disabled = !(payload.draft_email || payload.reply_subject);
 }
 
 function renderTagList(id, values) {
   const list = document.getElementById(id);
+  if (!list) {
+    return;
+  }
   const safeValues = values.length ? values : ["None"];
   list.innerHTML = safeValues.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
 }
 
-function renderSystemList(category) {
-  const values = CATEGORY_SYSTEMS[category] || CATEGORY_SYSTEMS.other;
-  renderTagList("systemList", values || []);
+function ensureSystemCard() {
+  if (document.getElementById("systemList")) {
+    return;
+  }
+
+  const outputGrid = document.querySelector(".output-grid");
+  const draftCard = outputGrid?.querySelector(".output-card.full-width");
+  if (!outputGrid || !draftCard) {
+    return;
+  }
+
+  const systemCard = document.createElement("section");
+  systemCard.className = "output-card";
+  systemCard.innerHTML = `
+    <span class="label">Potential Internal Systems To Check</span>
+    <ul id="systemList" class="tag-list"></ul>
+  `;
+  outputGrid.insertBefore(systemCard, draftCard);
 }
 
 function getFilteredSamples() {
@@ -518,6 +494,7 @@ async function generateDraft() {
     draft_email: "",
     missing_information: [],
     review_flags: [],
+    systems_to_check: [],
   };
   generateButton.disabled = true;
   copyButton.disabled = true;
@@ -543,6 +520,9 @@ async function generateDraft() {
     "",
     "REVIEW FLAGS:",
     "- <item>",
+    "",
+    "SYSTEMS TO CHECK:",
+    "- <internal system or source to verify before sending>",
     "",
     "CATEGORY: <category>",
     "If a section has nothing to add, write a single bullet with None.",
@@ -608,6 +588,7 @@ async function generateDraft() {
         draft_email: partial.draft_email || rawContent,
         reply_subject: partial.reply_subject || state.generatedDraft.reply_subject,
         intent_summary: partial.intent_summary || "Streaming draft...",
+        systems_to_check: partial.systems_to_check || state.generatedDraft.systems_to_check,
       };
       renderGeneratedDraft();
     });
@@ -621,6 +602,7 @@ async function generateDraft() {
       draft_email: parsed.draft_email || content || "",
       missing_information: parsed.missing_information || [],
       review_flags: parsed.review_flags || [],
+      systems_to_check: parsed.systems_to_check || [],
     };
 
     renderGeneratedDraft();
@@ -633,7 +615,9 @@ async function generateDraft() {
     state.generatedDraft = {
       ...state.generatedDraft,
       intent_summary: "Draft failed.",
-      review_flags: [`Generation error: ${error.message}`],
+      review_flags: [
+        `Generation error: ${error.message}`,
+      ],
     };
     renderGeneratedDraft();
     setStatus(
@@ -645,6 +629,18 @@ async function generateDraft() {
     state.streamAbortController = null;
     generateButton.disabled = false;
     renderGeneratedDraft();
+  }
+}
+
+function safeJsonParse(content) {
+  try {
+    return JSON.parse(content);
+  } catch {
+    return {
+      draft_email: content,
+      missing_information: [],
+      review_flags: ["Response was not valid JSON. Review manually."],
+    };
   }
 }
 
@@ -716,9 +712,18 @@ function parseStructuredDraftResponse(text) {
   const missingInformation = extractBulletSection(
     normalized,
     "MISSING INFO:",
-    ["\nREVIEW FLAGS:", "\nCATEGORY:"]
+    ["\nREVIEW FLAGS:", "\nSYSTEMS TO CHECK:", "\nCATEGORY:"]
   );
-  const reviewFlags = extractBulletSection(normalized, "REVIEW FLAGS:", ["\nCATEGORY:"]);
+  const reviewFlags = extractBulletSection(
+    normalized,
+    "REVIEW FLAGS:",
+    ["\nSYSTEMS TO CHECK:", "\nCATEGORY:"]
+  );
+  const systemsToCheck = extractBulletSection(
+    normalized,
+    "SYSTEMS TO CHECK:",
+    ["\nCATEGORY:"]
+  );
   const category = extractSingleLineSection(normalized, "CATEGORY:");
 
   return {
@@ -727,6 +732,7 @@ function parseStructuredDraftResponse(text) {
     intent_summary: intentSummary,
     missing_information: missingInformation,
     review_flags: reviewFlags,
+    systems_to_check: systemsToCheck,
     category,
   };
 }
