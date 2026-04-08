@@ -29,13 +29,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   try {
-    const analysis = readInlineJson("analysis-data");
-    const playbooks = readInlineJson("playbooks-data");
-    const samples = readInlineJson("samples-data");
-
-    if (!analysis || !playbooks || !samples) {
-      throw new Error("Embedded dashboard data is missing.");
-    }
+    const { analysis, playbooks, samples } = await loadDashboardData();
 
     state.analysis = analysis;
     state.playbooks = playbooks;
@@ -54,12 +48,44 @@ async function init() {
   }
 }
 
+async function loadDashboardData() {
+  try {
+    const analysis = readInlineJson("analysis-data");
+    const playbooks = readInlineJson("playbooks-data");
+    const samples = readInlineJson("samples-data");
+
+    if (!analysis || !playbooks || !samples) {
+      throw new Error("Embedded dashboard data is missing.");
+    }
+
+    return { analysis, playbooks, samples };
+  } catch (error) {
+    console.warn("Inline dashboard data failed to parse, falling back to hosted JSON files.", error);
+
+    const [analysis, playbooks, samples] = await Promise.all([
+      fetchJson("./data/analysis.json"),
+      fetchJson("./data/response_playbooks.json"),
+      fetchJson("./data/sample_emails.json"),
+    ]);
+
+    return { analysis, playbooks, samples };
+  }
+}
+
 function readInlineJson(id) {
   const node = document.getElementById(id);
   if (!node?.textContent?.trim()) {
     return null;
   }
   return JSON.parse(node.textContent);
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}: ${response.status}`);
+  }
+  return response.json();
 }
 
 function bindControls() {
@@ -552,7 +578,9 @@ async function generateDraft() {
     state.generatedDraft = {
       ...state.generatedDraft,
       intent_summary: "Draft failed.",
-      review_flags: [`Generation error: ${error.message}`],
+      review_flags: [
+        `Generation error: ${error.message}`,
+      ],
     };
     renderGeneratedDraft();
     setStatus(
@@ -564,6 +592,18 @@ async function generateDraft() {
     state.streamAbortController = null;
     generateButton.disabled = false;
     renderGeneratedDraft();
+  }
+}
+
+function safeJsonParse(content) {
+  try {
+    return JSON.parse(content);
+  } catch {
+    return {
+      draft_email: content,
+      missing_information: [],
+      review_flags: ["Response was not valid JSON. Review manually."],
+    };
   }
 }
 
@@ -632,8 +672,16 @@ function parseStructuredDraftResponse(text) {
   );
   const replySubject = extractSingleLineSection(normalized, "SUBJECT:");
   const intentSummary = extractSingleLineSection(normalized, "INTENT:");
-  const missingInformation = extractBulletSection(normalized, "MISSING INFO:", ["\nREVIEW FLAGS:", "\nCATEGORY:"]);
-  const reviewFlags = extractBulletSection(normalized, "REVIEW FLAGS:", ["\nCATEGORY:"]);
+  const missingInformation = extractBulletSection(
+    normalized,
+    "MISSING INFO:",
+    ["\nREVIEW FLAGS:", "\nCATEGORY:"]
+  );
+  const reviewFlags = extractBulletSection(
+    normalized,
+    "REVIEW FLAGS:",
+    ["\nCATEGORY:"]
+  );
   const category = extractSingleLineSection(normalized, "CATEGORY:");
 
   return {
